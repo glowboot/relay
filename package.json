@@ -1,0 +1,42 @@
+{
+  "name": "relay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "author": "the Glowboot authors",
+  "description": "Cloudflare Worker WebSocket relay for Glowboot's link-cable feature. Pairs two browser clients sharing a room code and forwards bytes between them.",
+  "keywords": [
+    "game-boy",
+    "gameboy",
+    "link-cable",
+    "glowboot",
+    "cloudflare-workers",
+    "durable-objects",
+    "websocket",
+    "relay"
+  ],
+  "homepage": "https://github.com/glowboot/relay",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/glowboot/relay.git"
+  },
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260401.0",
+    "eslint": "^10.3.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-simple-import-sort": "^13.0.0",
+    "prettier": "^3.8.3",
+    "typescript": "^6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "wrangler": "^4.0.0"
+  }
+}

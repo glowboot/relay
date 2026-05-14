@@ -1,0 +1,114 @@
+name: Relay bug report
+description: A pairing/relay problem with the link-cable Worker (not the emulator itself).
+title: "[Relay bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This repo is **only** the Cloudflare Worker that pairs two browser clients sharing a room code and forwards bytes between them. Use this template only for problems with that relay layer — pairing failures, dropped sockets, Worker error responses, idle timeouts.
+
+        **Emulator bugs (a game runs wrong, audio glitches, save-state issues, etc.) belong on [glowboot/glowboot](https://github.com/glowboot/glowboot/issues/new/choose), not here.**
+
+        Reports without the fields below will be closed.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: One or two sentences describing the relay problem.
+      placeholder: e.g. "Both clients joined room ABCD1234 but neither received a `peer-joined` message, so the link never started."
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open glowboot.pages.dev in two browsers.
+        2. Both join room code ABCD1234.
+        3. First tab shows "waiting"; second tab never moves past "connecting".
+    validations:
+      required: true
+
+  - type: input
+    id: room-code
+    attributes:
+      label: Room code used
+      description: The code in the URL or pairing UI at the time of the failure. Helps correlate with Worker logs if we still have them.
+      placeholder: "e.g. ABCD1234"
+    validations:
+      required: true
+
+  - type: input
+    id: when
+    attributes:
+      label: When did it happen?
+      description: Approximate date and time (with timezone, or UTC). Worker logs are short-lived, so the sooner the better.
+      placeholder: "e.g. 2026-05-14 14:32 UTC"
+    validations:
+      required: true
+
+  - type: input
+    id: region
+    attributes:
+      label: Your rough location / ISP
+      description: Helps us tell network/edge issues from relay bugs. Country + ISP is plenty — no exact address.
+      placeholder: "e.g. Germany, Deutsche Telekom"
+    validations:
+      required: true
+
+  - type: textarea
+    id: worker-error
+    attributes:
+      label: Worker error response or WebSocket close code
+      description: |
+        If the upgrade failed, paste the HTTP status + body (e.g. `403 Forbidden origin`). If the socket opened and later closed, paste the close code + reason from DevTools → Network → the `link/<room>` request → Messages tab.
+      render: shell
+    validations:
+      required: false
+
+  - type: input
+    id: browser
+    attributes:
+      label: Browser + version (on both ends, if known)
+      placeholder: "e.g. Chrome 138 (both), or Chrome 138 + Safari 18.4"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system + version
+      placeholder: "e.g. macOS 15.2, Windows 11, Android 14, iOS 18"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: source
+    attributes:
+      label: Where you ran Glowboot
+      options:
+        - Hosted at glowboot.pages.dev
+        - Local dev build (npm run dev)
+        - Self-hosted production build
+    validations:
+      required: true
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Browser console errors (if any)
+      description: Open DevTools → Console and paste any red error lines from both tabs.
+      render: shell
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: Anything else
+      description: Reproduction rate, whether direct WebRTC fallback worked, prior successful sessions, etc.
+    validations:
+      required: false

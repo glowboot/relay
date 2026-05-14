@@ -1,0 +1,55 @@
+/**
+ * Cloudflare Worker that relays Game Boy link-cable messages between
+ * two browser tabs, so two players on different machines can pair
+ * via a shared room code. Durable-Object-per-room holds the two
+ * WebSockets and forwards everything between them.
+ *
+ * Deploy:
+ *   npm run deploy
+ *
+ * The deployed URL (e.g. `https://relay.<subdomain>.workers.dev`) is
+ * baked into the emulator build via the `VITE_LINK_RELAY_URL`
+ * environment variable. The browser uses `wss://` for the WebSocket
+ * upgrade automatically.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "relay",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-04-22",
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "ROOMS",
+        "class_name": "LinkRoom"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["LinkRoom"]
+    }
+  ],
+  // Rate Limiting API binding. 20 upgrade requests per minute per
+  // client IP — enough headroom for legitimate reconnects, low enough
+  // to choke abuse before it reaches the Durable Object path. The
+  // binding lives under `unsafe.bindings` because the API is still in
+  // preview; the shape may change.
+  "unsafe": {
+    "bindings": [
+      {
+        "type": "ratelimit",
+        "name": "RATE_LIMITER",
+        "namespace_id": "1001",
+        "simple": {
+          "limit": 20,
+          "period": 60
+        }
+      }
+    ]
+  },
+  "observability": {
+    "enabled": true
+  }
+}
