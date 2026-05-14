@@ -30,13 +30,13 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260401.0",
+    "@cloudflare/workers-types": "^4.20260511.1",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-simple-import-sort": "^13.0.0",
     "prettier": "^3.8.3",
     "typescript": "^6.0.2",
-    "typescript-eslint": "^8.59.2",
-    "wrangler": "^4.0.0"
+    "typescript-eslint": "^8.59.3",
+    "wrangler": "^4.90.1"
   }
 }
