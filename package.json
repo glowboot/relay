@@ -30,7 +30,7 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260615.1",
+    "@cloudflare/workers-types": "^4.20260621.1",
     "eslint": "^10.5.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-simple-import-sort": "^13.0.0",
